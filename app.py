@@ -48,9 +48,9 @@ def predict_diabetes():
             output = float(output)*100
             kq = str(output)+'%'
             if output>50:
-                return render_template('d_result.html',content=f'Bạn có nguy cơ cao nhiễm tiểu đường. Tỉ lệ tiểu đường lên đến ',pred=kq,img='diabetes.jpg',out=output)
+                return render_template('d_result.html',content=f'Bạn có nguy cơ cao nhiễm tiểu đường.Tỉ lệ tiểu đường lên đến ',pred=kq,img='img_result/badResult_80.jpg',out=output)
             else:
-                return render_template('d_result.html',content=f'Bạn an toàn. Tỉ lệ tiểu đường chỉ có ',pred=kq,img='Naruto_stroke.png',out=output)
+                return render_template('d_result.html',content=f'Bạn an toàn. <br>Tỉ lệ tiểu đường chỉ có ',pred=kq,img='img_result/goodResult_20.jpg',out=output)
         except ValueError:
             flash(
                 'Xin vui lòng điền đầy đủ thông tin cần thiết', 'danger')
