@@ -50,7 +50,7 @@ def predict_diabetes():
             if output>50:
                 return render_template('d_result.html',content=f'Bạn có nguy cơ cao nhiễm tiểu đường.Tỉ lệ tiểu đường lên đến ',pred=kq,img='img_result/badResult_80.jpg',out=output)
             else:
-                return render_template('d_result.html',content=f'Bạn an toàn. <br>Tỉ lệ tiểu đường chỉ có ',pred=kq,img='img_result/goodResult_20.jpg',out=output)
+                return render_template('d_result.html',content=f'Bạn an toàn. Tỉ lệ tiểu đường chỉ có ',pred=kq,img='img_result/goodResult_20.jpg',out=output)
         except ValueError:
             flash(
                 'Xin vui lòng điền đầy đủ thông tin cần thiết', 'danger')
@@ -168,7 +168,7 @@ def fetal_health_value_predictor(data):
         data = list(map(float, data))
         data = np.array(data).reshape(1, -1)
         # tải mô hình được đào tạo trước đã lưu để có dự đoán mới
-        model_path = 'Models/fetal-health-model.pkl'
+        model_path = 'Models/F_fetal-health-model.pkl'
         model = pickle.load(open(model_path, 'rb'))
         result = model.predict(data)
         result = int(result[0])

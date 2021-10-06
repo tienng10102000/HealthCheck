@@ -11,115 +11,135 @@
 }
 {% endblock css %}
 {% block body %}
-<div class="container col-lg-6 col-sm-11">
-    <h1 class="text-center"><u><b>Fetal Health Prediction</b></u></h1>
-
+<br>
+<div class="container">
+    <h1 class="text-center mb-2 pb-2">CHẨN ĐOÁN SỨC KHOẺ THAI NHI</h1>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-2">
+            <p style="margin-top:20px">
+                Tiểu đường (hay đái tháo đường) là thuật ngữ dùng để đề cập tới một nhóm bệnh gây ảnh hưởng đến cách cơ thể sử dụng lượng đường (glucose) trong máu.
+            <br>
+            Glucose rất quan trọng đối với sức khỏe vì đây là nguồn năng lượng cần thiết giúp cho các tế bào trong cơ thể hoạt động bình thường, đặc biệt là tế bào não.
+            <br>
+            Nguyên nhân gây bệnh rất đa dạng, tùy thuộc vào từng loại tiểu đường cụ thể. Tuy nhiên, dù mắc loại tiểu đường nào thì bệnh vẫn dẫn đến lượng đường trong máu cao, từ đó gây nên hàng loạt vấn đề sức khỏe nghiêm trọng.
+            </p>
+            <img src=".\static\img_cate\tieuduong.jpg" width="100%">
+            <p>Hãy cùng làm một bài test xem bạn có nguy cơ bị tiểu đường không nhé !</p>
+            </div>
+        
 
 <!-- Taking Input Data Area -->
-<div id="entry_form" style="display: none;">
-    <form action="/fetal_health" method="POST" style="font-weight: 600;">
-        <div class="form-group">
-            <label for="">Baseline Value *</label>
-            <input type="text" name="baseline_value" class="form-control" placeholder="e.g.  120" required>
-        </div>
-        <div class="form-group">
-            <label for="">Accelerations *</label>
-            <input type="text" name="accelerations" class="form-control" placeholder="e.g.  0" required>
-        </div>
+            <div class="col-lg-6 col-md-6 col-sm-10">
+                <div class="container-castome mx-auto">
+                    <div id="entry_form" style="display: none;">
+                        <form action="/fetal_health" method="POST" style="font-weight: 600;">
+                            <div class="form-group">
+                                <label for="">Đường cơ sở (baselines)</label>
+                                <input type="text" name="baseline_value" class="form-control" placeholder="e.g.  120" required>
+                            </div>
 
-        <div class="form-group">
-            <label for="">Fetal Movement *</label>
-            <input type="text" name="fetal_movement" class="form-control" placeholder="e.g.  0" required>
-        </div>
-        <div class="form-group">
-            <label for="">Uterine Contractions *</label>
-            <input type="text" name="uterine_contractions" class="form-control" placeholder="e.g.  0" required>
-        </div>
+                            <div class="form-group">
+                                <label for="">Các biến động tăng nhịp (Accelerations)</label>
+                                <input type="text" name="accelerations" class="form-control" placeholder="e.g.  0" required>
+                            </div>
+                    
+                            <div class="form-group">
+                                <label for="">Sự chuyển động của thai nhi (Fetal Movement)</label>
+                                <input type="text" name="fetal_movement" class="form-control" placeholder="e.g.  0" required>
+                            </div>
 
-        <div class="form-group">
-            <label for="">Light Decelerations *</label>
-            <input type="text" name="light_decelerations" class="form-control" placeholder="e.g.  0" required>
-        </div>
-        <div class="form-group">
-            <label for="">Severe Decelerations *</label>
-            <input type="text" name="severe_decelerations" class="form-control" placeholder="e.g.  0" required>
-        </div>
+                            <div class="form-group">
+                                <label for="">Cơn co thắt tử cung (Uterine Contractions)</label>
+                                <input type="text" name="uterine_contractions" class="form-control" placeholder="e.g.  0" required>
+                            </div>
+                    
+                            <div class="form-group">
+                                <label for="">Nhịp tim thai nhi giảm (Light Decelerations)</label>
+                                <input type="text" name="light_decelerations" class="form-control" placeholder="e.g.  0" required>
+                            </div>
 
-        <div class="form-group">
-            <label for="">Prolongued Decelerations *</label>
-            <input type="text" name="prolongued_decelerations" class="form-control" placeholder="e.g.  0" required>
-        </div>
-        <div class="form-group">
-            <label for="">Abnormal Short Term Variability *</label>
-            <input type="text" name="abnormal_short_term_variability" class="form-control" placeholder="e.g.  73" required>
-        </div>
+                            <div class="form-group">
+                                <label for="">Nhịp tim bị giảm trầm trọng (Severe Decelerations)</label>
+                                <input type="text" name="severe_decelerations" class="form-control" placeholder="e.g.  0" required>
+                            </div>
+                    
+                            <div class="form-group">
+                                <label for="">Nhịp giảm kéo dài (Prolongued Decelerations)</label>
+                                <input type="text" name="prolongued_decelerations" class="form-control" placeholder="e.g.  0" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Nhịp giảm bất định (Abnormal Short Term Variability)</label>
+                                <input type="text" name="abnormal_short_term_variability" class="form-control" placeholder="e.g.  73" required>
+                            </div>
+                    
+                            <div class="form-group">
+                                <label for="">Giá trị trung bình của sự thay đổi nhịp ngắn hạn <br>(Mean Value of Short Term Variability)</label>
+                                <input type="text" name="mean_value_of_short_term_variability" class="form-control" placeholder="e.g.  0.5" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Phần trăm thời gian có thay đổi bất thường trong dài hạn (Percentage of Time with Abnormal Long Term Variability)</label>
+                                <input type="text" name="percentage_of_time_with_abnormal_long_term_variability" class="form-control" placeholder="e.g.  43" required>
+                            </div>
+                    
+                            <div class="form-group">
+                                <label for="">Giá trị trung bình của sự thay đổi khoảng thời gian dài hạn <br>
+                                (Mean Value of Long Term Variability)</label>
+                                <input type="text" name="mean_value_of_long_term_variability" class="form-control" placeholder="e.g.  2.4" required>
+                            </div>
 
-        <div class="form-group">
-            <label for="">Mean Value of Short Term Variability *</label>
-            <input type="text" name="mean_value_of_short_term_variability" class="form-control" placeholder="e.g.  0.5" required>
-        </div>
-        <div class="form-group">
-            <label for="">Percentage of Time with Abnormal Long Term Variability *</label>
-            <input type="text" name="percentage_of_time_with_abnormal_long_term_variability" class="form-control" placeholder="e.g.  43" required>
-        </div>
+                            <div class="form-group">
+                                <label for="">Độ rộng Histogram (Histogram Witdh)</label>
+                                <input type="text" name="histogram_width" class="form-control" placeholder="e.g.  64" required>
+                            </div>
+                    
+                            <div class="form-group">
+                                <label for="">Độ lớn tối thiểu của Histogram (Histogram Min)</label>
+                                <input type="text" name="histogram_min" class="form-control" placeholder="e.g.  62" required>
+                            </div>
 
-        <div class="form-group">
-            <label for="">Mean Value of Long Term Variability *</label>
-            <input type="text" name="mean_value_of_long_term_variability" class="form-control" placeholder="e.g.  2.4" required>
+                            <div class="form-group">
+                                <label for="">Độ lớn tối đa của Histogram (Histogram Max)</label>
+                                <input type="text" name="histogram_max" class="form-control" placeholder="e.g.  126" required>
+                            </div>
+                    
+                            <div class="form-group">
+                                <label for="">Số lượng đỉnh trong biểu đồ (Histogram Number of Peaks)</label>
+                                <input type="text" name="histogram_number_of_peaks" class="form-control" placeholder="e.g.  2" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Biểu đồ số 0 (Histogram Number of Zeroes)</label>
+                                <input type="text" name="histogram_number_of_zeroes" class="form-control" placeholder="e.g.  0" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Chế độ Histogram (Histogram Mode)</label>
+                                <input type="text" name="histogram_mode" class="form-control" placeholder="e.g.  120" required>
+                            </div>
+                    
+                            <div class="form-group">
+                                <label for="">Biểu đồ trung vị (Histogram Mean)</label>
+                                <input type="text" name="histogram_mean" class="form-control" placeholder="e.g.  137" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Biểu đồ trung bình (Histogram Median)</label>
+                                <input type="text" name="histogram_median" class="form-control" placeholder="e.g.  121" required>
+                            </div>
+                    
+                            <div class="form-group">
+                                <label for="">Phương sai biểu đồ (Histogram Variance)</label>
+                                <input type="text" name="histogram_variance" class="form-control" placeholder="e.g.  73" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Xu hướng biểu đồ (Histogram Tendency)</label>
+                                <input type="text" name="histogram_tendency" class="form-control" placeholder="e.g.  1" required>
+                            </div>
+                            <div class="text-center mb-4 pb-5">
+                                <input type="submit" class="btn btn-success btn-lg" value="Chẩn đoán">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="">Histogram Width *</label>
-            <input type="text" name="histogram_width" class="form-control" placeholder="e.g.  64" required>
-        </div>
-
-        <div class="form-group">
-            <label for="">Histogram Min *</label>
-            <input type="text" name="histogram_min" class="form-control" placeholder="e.g.  62" required>
-        </div>
-        <div class="form-group">
-            <label for="">Histogram Max *</label>
-            <input type="text" name="histogram_max" class="form-control" placeholder="e.g.  126" required>
-        </div>
-
-        <div class="form-group">
-            <label for="">Histogram Number of Peaks *</label>
-            <input type="text" name="histogram_number_of_peaks" class="form-control" placeholder="e.g.  2" required>
-        </div>
-        <div class="form-group">
-            <label for="">Histogram Number of Zeroes *</label>
-            <input type="text" name="histogram_number_of_zeroes" class="form-control" placeholder="e.g.  0" required>
-        </div>
-        <div class="form-group">
-            <label for="">Histogram Mode *</label>
-            <input type="text" name="histogram_mode" class="form-control" placeholder="e.g.  120" required>
-        </div>
-
-        <div class="form-group">
-            <label for="">Histogram Mean *</label>
-            <input type="text" name="histogram_mean" class="form-control" placeholder="e.g.  137" required>
-        </div>
-        <div class="form-group">
-            <label for="">Histogram Median *</label>
-            <input type="text" name="histogram_median" class="form-control" placeholder="e.g.  121" required>
-        </div>
-
-        <div class="form-group">
-            <label for="">Histogram Variance *</label>
-            <input type="text" name="histogram_variance" class="form-control" placeholder="e.g.  73" required>
-        </div>
-        <div class="form-group">
-            <label for="">Histogram Tendency *</label>
-            <input type="text" name="histogram_tendency" class="form-control" placeholder="e.g.  1" required>
-        </div>
-        
-
-        <div class="text-center mb-4 pb-5">
-            <input type="submit" class="btn btn-success btn-lg" value="Predict">
-        </div>
-        
-    </form>
-</div>
-
 <!-- Displaying Output Area -->
 <div class="center mt-4 pt-4" id="show_result" style="display: none;">
     {%  if result == 1 %}
