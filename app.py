@@ -56,6 +56,73 @@ def predict_diabetes():
                 'Xin vui lòng điền đầy đủ thông tin cần thiết', 'danger')
             return redirect(url_for('diabetes'))
 
+# SỐT RÉT
+@app.route("/malaria", methods=['GET', 'POST'])
+def malaria():
+    return render_template('malaria.html')
+
+@app.route("/malariapredict", methods=['POST', 'GET'])
+def malariapredict():
+    if request.method == 'POST':
+        try:
+            if 'image' in request.files:
+                img = Image.open(request.files['image'])
+                img = img.resize((50, 50))
+                img = np.asarray(img)
+                img = img.reshape((1, 50, 50, 3))
+                img = img.astype(np.float64)
+
+                model_path = "Models/malaria-model.h5"
+                model = tf.keras.models.load_model(model_path)
+                pred = np.argmax(model.predict(img)[0])
+        except:
+            message = "Làm ơn làm phước chọn một tấm hình rồi hãy bấm tiếp"
+            return render_template('malaria.html', message=message)
+    return render_template('malaria_predict.html', pred=pred)
+
+
+# SỨC KHOẺ THAI NHI
+@app.route('/fetal_health', methods=['GET', 'POST'])
+def fetal_health_prediction():
+    if request.method == 'POST':
+        # lấy dữ liệu form bằng phương thức POST
+        data = request.form.to_dict()
+        # chuyển dữ liệu form sang phương pháp dự đoán tùy chỉnh để nhận được kết quả
+        result, status = fetal_health_value_predictor(data)
+        if status:
+            # nếu dự đoán xảy ra thành công thì trạng thái = True 
+            # và sau đó chuyển đầu ra cho trang html
+            return render_template('fetal_health.html', result=result)
+        else:
+            # nếu có bất kỳ lỗi nào xảy ra trong quá trình dự đoán thì thông báo lỗi sẽ được hiển thị
+            return f'<h2>Error : {result}</h2>'
+
+    #nếu người dùng gửi yêu cầu GET tới '/fetal_health' thì chúng tôi chỉ hiển thị trang html
+    # trong đó có một form để dự đoán
+
+    return render_template('fetal_health.html', result=None)
+
+# chức năng này sử dụng để dự đoán đầu ra cho Sức khỏe thai nhi từ dữ liệu đã cho
+def fetal_health_value_predictor(data):
+    try:
+        # sau khi lấy dữ liệu từ biểu mẫu html, chúng tôi thu thập các giá trị và
+        # chuyển đổi thành mảng 2D numpy để dự đoán
+        data = list(data.values())
+        data = list(map(float, data))
+        data = np.array(data).reshape(1, -1)
+        # tải mô hình được đào tạo trước đã lưu để có dự đoán mới
+        model_path = 'Models/F_fetal-health-model.pkl'
+        model = pickle.load(open(model_path, 'rb'))
+        result = model.predict(data)
+        result = int(result[0])
+        status = True
+        # trả về giá trị đầu ra dự đoán
+        return (result, status)
+    except Exception as e:
+        result = str(e)
+        status = False
+        return (result, status)
+
 # CHẨN ĐOÁN BỆNH TIM
 @app.route('/heart')
 def heart():
@@ -138,48 +205,6 @@ def predict_cancer():
 
         return render_template('c_result.html', prediction=my_prediction)
 
-# SỨC KHOẺ THAI NHI
-@app.route('/fetal_health', methods=['GET', 'POST'])
-def fetal_health_prediction():
-    if request.method == 'POST':
-        # lấy dữ liệu form bằng phương thức POST
-        data = request.form.to_dict()
-        # chuyển dữ liệu form sang phương pháp dự đoán tùy chỉnh để nhận được kết quả
-        result, status = fetal_health_value_predictor(data)
-        if status:
-            # nếu dự đoán xảy ra thành công thì trạng thái = True 
-            # và sau đó chuyển đầu ra cho trang html
-            return render_template('fetal_health.html', result=result)
-        else:
-            # nếu có bất kỳ lỗi nào xảy ra trong quá trình dự đoán thì thông báo lỗi sẽ được hiển thị
-            return f'<h2>Error : {result}</h2>'
-
-    #nếu người dùng gửi yêu cầu GET tới '/fetal_health' thì chúng tôi chỉ hiển thị trang html
-    # trong đó có một form để dự đoán
-
-    return render_template('fetal_health.html', result=None)
-
-# chức năng này sử dụng để dự đoán đầu ra cho Sức khỏe thai nhi từ dữ liệu đã cho
-def fetal_health_value_predictor(data):
-    try:
-        # sau khi lấy dữ liệu từ biểu mẫu html, chúng tôi thu thập các giá trị và
-        # chuyển đổi thành mảng 2D numpy để dự đoán
-        data = list(data.values())
-        data = list(map(float, data))
-        data = np.array(data).reshape(1, -1)
-        # tải mô hình được đào tạo trước đã lưu để có dự đoán mới
-        model_path = 'Models/F_fetal-health-model.pkl'
-        model = pickle.load(open(model_path, 'rb'))
-        result = model.predict(data)
-        result = int(result[0])
-        status = True
-        # trả về giá trị đầu ra dự đoán
-        return (result, status)
-    except Exception as e:
-        result = str(e)
-        status = False
-        return (result, status)
-
 # CHẨN ĐOÁN ĐỘT QUỴ
 @app.route('/stroke')
 def stroke():
@@ -227,30 +252,6 @@ def predict_liver_disease():
         pred = int(output)
 
         return render_template('liver_result.html', prediction=pred)
-
-# SỐT XUẤT HUYẾT
-@app.route("/malaria", methods=['GET', 'POST'])
-def malaria():
-    return render_template('malaria.html')
-
-@app.route("/malariapredict", methods=['POST', 'GET'])
-def malariapredict():
-    if request.method == 'POST':
-        try:
-            if 'image' in request.files:
-                img = Image.open(request.files['image'])
-                img = img.resize((50, 50))
-                img = np.asarray(img)
-                img = img.reshape((1, 50, 50, 3))
-                img = img.astype(np.float64)
-
-                model_path = "Models/malaria-model.h5"
-                model = tf.keras.models.load_model(model_path)
-                pred = np.argmax(model.predict(img)[0])
-        except:
-            message = "Please upload an Image"
-            return render_template('malaria.html', message=message)
-    return render_template('malaria_predict.html', pred=pred)
 
 @app.route('/')
 def home():

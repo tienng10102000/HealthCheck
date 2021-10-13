@@ -23,8 +23,8 @@
   overflow: hidden;
 }
 
-.light{
-    background: url('./bg_healthcheck_dark.png');
+.dark-mode .light {
+    background: url('./bg_healthcheck.png');
 }
 
 .dark-mode .switch{
